@@ -5,9 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Logistics Platform</title>
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 <style>
-
+#map{
+    height:500px;
+    width:100%;
+    border-radius:15px;
+}
 *{
     margin:0;
     padding:0;
@@ -397,7 +406,21 @@ VYPOČÍTAŤ
 </div>
 
 </section>
+<section id="mapSection">
 
+<div class="container">
+
+<h2>Mapa trasy</h2>
+
+<div class="card">
+
+<div id="map"></div>
+
+</div>
+
+</div>
+
+</section>
 <section id="contacts">
 
 <div class="container">
@@ -563,7 +586,141 @@ const countries = {
 "Malta":[
 "Valletta"
 ]
+const cityCoordinates = {
 
+    // Slovensko
+    "Bratislava":[48.1486,17.1077],
+    "Košice":[48.7164,21.2611],
+    "Prešov":[48.9984,21.2339],
+    "Nitra":[48.3064,18.0764],
+    "Žilina":[49.2231,18.7394],
+    "Trnava":[48.3774,17.5872],
+    "Trenčín":[48.8945,18.0444],
+    "Banská Bystrica":[48.7363,19.1462],
+
+    // Rakúsko
+    "Viedeň":[48.2082,16.3738],
+    "Graz":[47.0707,15.4395],
+    "Linz":[48.3069,14.2858],
+    "Salzburg":[47.8095,13.0550],
+    "Innsbruck":[47.2692,11.4041],
+    "Klagenfurt":[46.6247,14.3053],
+
+    // Belgicko
+    "Brusel":[50.8503,4.3517],
+    "Antverpy":[51.2194,4.4025],
+    "Gent":[51.0543,3.7174],
+    "Liège":[50.6326,5.5797],
+    "Namur":[50.4674,4.8718],
+
+    // Nemecko
+    "Berlín":[52.5200,13.4050],
+    "Hamburg":[53.5511,9.9937],
+    "Mníchov":[48.1351,11.5820],
+    "Kolín nad Rýnom":[50.9375,6.9603],
+    "Frankfurt nad Mohanom":[50.1109,8.6821],
+    "Stuttgart":[48.7758,9.1829],
+    "Drážďany":[51.0504,13.7373],
+    "Hannover":[52.3759,9.7320],
+    "Brémy":[53.0793,8.8017],
+    "Düsseldorf":[51.2277,6.7735],
+
+    // Francúzsko
+    "Paríž":[48.8566,2.3522],
+    "Marseille":[43.2965,5.3698],
+    "Lyon":[45.7640,4.8357],
+    "Toulouse":[43.6047,1.4442],
+    "Bordeaux":[44.8378,-0.5792],
+    "Nantes":[47.2184,-1.5536],
+    "Lille":[50.6292,3.0573],
+    "Štrasburg":[48.5734,7.7521],
+
+    // Taliansko
+    "Rím":[41.9028,12.4964],
+    "Miláno":[45.4642,9.1900],
+    "Turín":[45.0703,7.6869],
+    "Neapol":[40.8518,14.2681],
+    "Bologna":[44.4949,11.3426],
+    "Janov":[44.4056,8.9463],
+    "Benátky":[45.4408,12.3155],
+    "Florencia":[43.7696,11.2558],
+
+    // Španielsko
+    "Madrid":[40.4168,-3.7038],
+    "Barcelona":[41.3851,2.1734],
+    "Valencia":[39.4699,-0.3763],
+    "Sevilla":[37.3891,-5.9845],
+    "Zaragoza":[41.6488,-0.8891],
+    "Bilbao":[43.2630,-2.9350],
+
+    // Holandsko
+    "Amsterdam":[52.3676,4.9041],
+    "Rotterdam":[51.9244,4.4777],
+    "Haag":[52.0705,4.3007],
+    "Utrecht":[52.0907,5.1214],
+    "Eindhoven":[51.4416,5.4697],
+
+    // Portugalsko
+    "Lisabon":[38.7223,-9.1393],
+    "Porto":[41.1579,-8.6291],
+    "Braga":[41.5454,-8.4265],
+    "Coimbra":[40.2033,-8.4103],
+
+    // Fínsko
+    "Helsinki":[60.1699,24.9384],
+    "Tampere":[61.4978,23.7610],
+    "Turku":[60.4518,22.2666],
+    "Oulu":[65.0121,25.4651],
+
+    // Grécko
+    "Atény":[37.9838,23.7275],
+    "Solún":[40.6401,22.9444],
+    "Patras":[38.2466,21.7346],
+    "Larisa":[39.6390,22.4191],
+
+    // Litva
+    "Vilnius":[54.6872,25.2797],
+    "Kaunas":[54.8985,23.9036],
+    "Klaipėda":[55.7033,21.1443],
+
+    // Lotyšsko
+    "Riga":[56.9496,24.1052],
+    "Daugavpils":[55.8747,26.5362],
+    "Liepāja":[56.5047,21.0108],
+
+    // Estónsko
+    "Tallinn":[59.4370,24.7536],
+    "Tartu":[58.3780,26.7290],
+    "Narva":[59.3790,28.1903],
+
+    // Slovinsko
+    "Ľubľana":[46.0569,14.5058],
+    "Maribor":[46.5547,15.6459],
+    "Koper":[45.5481,13.7302],
+
+    // Chorvátsko
+    "Záhreb":[45.8150,15.9819],
+    "Split":[43.5081,16.4402],
+    "Rijeka":[45.3271,14.4422],
+    "Osijek":[45.5550,18.6955],
+
+    // Luxembursko
+    "Luxemburg":[49.6116,6.1319],
+
+    // Írsko
+    "Dublin":[53.3498,-6.2603],
+    "Cork":[51.8985,-8.4756],
+    "Galway":[53.2707,-9.0568],
+    "Limerick":[52.6638,-8.6267],
+
+    // Cyprus
+    "Nikózia":[35.1856,33.3823],
+    "Limassol":[34.7071,33.0226],
+
+    // Malta
+    "Valletta":[35.8989,14.5146]
+
+};
 };
 
 function loadCountries(){
@@ -636,7 +793,7 @@ const rates = {
 };
 
 function calculatePrice() {
-
+showRoute();
     let cargoType = document.getElementById("cargoType");
 
     let selectedCargo =
@@ -697,8 +854,60 @@ function calculatePrice() {
     document.getElementById("resultTime").innerHTML =
         Math.round(distance / 75) + " h";
 }
+let map;
+let routeLine;
 
-window.onload=loadCountries;
+function initMap(){
+
+    map = L.map('map').setView([48.7,19],7);
+
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution:'OpenStreetMap'
+        }
+    ).addTo(map);
+
+}
+
+function showRoute(){
+
+    let fromCity =
+        document.getElementById("fromCity").value;
+
+    let toCity =
+        document.getElementById("toCity").value;
+
+    if(
+        !cityCoordinates[fromCity] ||
+        !cityCoordinates[toCity]
+    ){
+        return;
+    }
+
+    if(routeLine){
+        map.removeLayer(routeLine);
+    }
+
+    let start = cityCoordinates[fromCity];
+    let end = cityCoordinates[toCity];
+
+    routeLine = L.polyline(
+        [start,end],
+        {
+            color:'blue',
+            weight:4
+        }
+    ).addTo(map);
+
+    map.fitBounds(routeLine.getBounds());
+}
+window.onload = function(){
+
+    loadCountries();
+    initMap();
+
+};
 
 </script>
 
