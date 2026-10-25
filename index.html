@@ -339,16 +339,26 @@ id="weight"
 placeholder="22000">
 </div>
 
-<div class="form-group">
-<label>Objem (m³)</label>
-<input type="number" placeholder="67">
+<div
+class="form-group"
+id="volumeBlock"
+style="display:none;">
+
+    <label>Objem (m³)</label>
+
+    <input
+    type="number"
+    id="volume"
+    placeholder="67">
+
 </div>
 
 <div class="form-group">
 
 <label>Typ vozidla</label>
 
-<select id="vehicle">
+<select id="vehicle" disabled>
+<option value="">Automatický výber</option>
 <option>Plachtové vozidlo</option>
 <option>Chladiarenské vozidlo</option>
 <option>Izotermické vozidlo</option>
@@ -764,23 +774,55 @@ citySelect.innerHTML+=
 
 function cargoOptions(){
 
-let cargo =
-document.getElementById("cargoType").value;
+    document.getElementById("volumeBlock").style.display = "none";
 
-document.getElementById("containerBlock").style.display="none";
-document.getElementById("palletBlock").style.display="none";
-document.getElementById("adrBlock").style.display="none";
+    let cargo =
+        document.getElementById("cargoType").value;
 
-if(cargo==="container"){
-document.getElementById("containerBlock").style.display="block";
-}
+    let vehicle =
+        document.getElementById("vehicle");
 
-if(cargo==="pallet"){
-document.getElementById("palletBlock").style.display="block";
-}
+    document.getElementById("containerBlock").style.display = "none";
+    document.getElementById("palletBlock").style.display = "none";
+    document.getElementById("adrBlock").style.display = "none";
 
-if(cargo==="adr" || cargo==="tankadr"){
-document.getElementById("adrBlock").style.display="block";
+    switch(cargo){
+
+        case "container":
+            document.getElementById("containerBlock").style.display = "block";
+            vehicle.value = "Kontajnerový nosič";
+            break;
+
+        case "tank":
+            vehicle.value = "Cisterna";
+            break;
+
+        case "tankadr":
+            document.getElementById("adrBlock").style.display = "block";
+            vehicle.value = "Cisterna";
+            break;
+
+        case "adr":
+            document.getElementById("adrBlock").style.display = "block";
+            vehicle.value = "Plachtové vozidlo";
+            break;
+
+        case "bulk":
+
+    vehicle.value = "Sklápač";
+
+    document.getElementById("volumeBlock").style.display = "block";
+
+    break;
+
+        case "pallet":
+            document.getElementById("palletBlock").style.display = "block";
+            vehicle.value = "Plachtové vozidlo";
+            break;
+
+        default:
+            vehicle.value = "";
+    }
 }
 
 }
@@ -801,7 +843,27 @@ showRoute();
         cargoType.options[cargoType.selectedIndex].text;
 
     let weight =
-        Number(document.getElementById("weight").value) || 0;
+        weightCoef = 1.30 || 0;
+
+    let volumeCoef = 1;
+
+if(selectedCargo === "Sypký náklad"){
+
+    if(volume > 10)
+        volumeCoef = 1.05;
+
+    if(volume > 30)
+        volumeCoef = 1.15;
+
+    if(volume > 60)
+        volumeCoef = 1.30;
+
+    if(volume > 80)
+        volumeCoef = 1.50;
+}
+
+    let volume =
+    Number(document.getElementById("volume").value) || 0;
 
     let urgent =
         document.getElementById("urgent").value;
@@ -836,12 +898,16 @@ showRoute();
 
     };
 
-    let finalPrice =
-        distance *
-        rate *
-        weightCoef *
-        urgentCoef *
-        vehicleCoef[vehicle];
+    <input
+type="number"
+id="volume"
+placeholder="67"> =
+    distance *
+    rate *
+    weightCoef *
+    volumeCoef *
+    urgentCoef *
+    vehicleCoef[vehicle];
 
     document.getElementById("resultDistance").innerHTML =
         distance + " km";
@@ -850,7 +916,7 @@ showRoute();
         rate.toFixed(2) + " €/km";
 
     document.getElementById("resultPrice").innerHTML =
-        finalPrice.toFixed(0) + " €";
+        <input type="number" placeholder="67">.toFixed(0) + " €";
 
     document.getElementById("resultTime").innerHTML =
         Math.round(distance / 75) + " h";
