@@ -835,16 +835,28 @@ const rates = {
 };
 
 function calculatePrice() {
+
+let finalPrice =
+    distance *
+    rate *
+    weightCoef *
+    volumeCoef *
+    urgentCoef *
+    vehicleCoef[vehicle];
+    
 showRoute();
     let cargoType = document.getElementById("cargoType");
 
     let selectedCargo =
         cargoType.options[cargoType.selectedIndex].text;
 
-    let weight =
-        weightCoef = 1.30 || 0;
+   let weight =
+    Number(document.getElementById("weight").value) || 0;
 
-    let volumeCoef = 1;
+let volume =
+    Number(document.getElementById("volume").value) || 0;
+
+let volumeCoef = 1;
 
 if(selectedCargo === "Sypký náklad"){
 
@@ -860,9 +872,6 @@ if(selectedCargo === "Sypký náklad"){
     if(volume > 80)
         volumeCoef = 1.50;
 }
-
-    let volume =
-    Number(document.getElementById("volume").value) || 0;
 
     let urgent =
         document.getElementById("urgent").value;
@@ -900,13 +909,8 @@ if(selectedCargo === "Sypký náklad"){
     <input
 type="number"
 id="volume"
-placeholder="67"> =
-    distance *
-    rate *
-    weightCoef *
-    volumeCoef *
-    urgentCoef *
-    vehicleCoef[vehicle];
+placeholder="67"> 
+
 
     document.getElementById("resultDistance").innerHTML =
         distance + " km";
