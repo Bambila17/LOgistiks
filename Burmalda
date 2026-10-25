@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Logistics Platform</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+    color:#333;
+}
+
+header{
+    background:#1e3a5f;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#4fc3f7;
+}
+
+.hero{
+    height:60vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(rgba(30,58,95,.75),rgba(30,58,95,.75));
+    color:white;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+}
+
+section{
+    padding:60px 20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#1e3a5f;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.08);
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+select,
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#1e3a5f;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2b527f;
+}
+
+.result{
+    margin-top:25px;
+    background:#eef2f7;
+    padding:20px;
+    border-radius:10px;
+}
+
+footer{
+    background:#1e3a5f;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:768px){
+
+header{
+    flex-direction:column;
+    gap:15px;
+}
+
+nav ul{
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.hero h1{
+    font-size:34px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">LOGISTICS</div>
+
+<nav>
+<ul>
+<li>#exchangeБиржа</a></li>
+<li>#calculatorКалькулятор</a></li>
+<li>#contactsКонтакты</a></li>
+</ul>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Логистическая платформа</h1>
+
+<p>
+Поиск грузов, расчёт перевозок и управление логистикой
+</p>
+
+</section>
+
+<section id="exchange">
+
+<div class="container">
+
+<h2>Биржа</h2>
+
+<div class="card">
+
+<p>
+Раздел находится в разработке.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="calculator">
+
+<div class="container">
+
+<h2>Калькулятор стоимости перевозки</h2>
+
+<div class="card">
+
+<div class="form-group">
+<label>Страна отправления</label>
+<select id="fromCountry" onchange="updateCities('from')"></select>
+</div>
+
+<div class="form-group">
+<label>Город отправления</label>
+<select id="fromCity"></select>
+</div>
+
+<div class="form-group">
+<label>Страна назначения</label>
+<select id="toCountry" onchange="updateCities('to')"></select>
+</div>
+
+<div class="form-group">
+<label>Город назначения</label>
+<select id="toCity"></select>
+</div>
+
+<div class="form-group">
+<label>Тип груза</label>
+
+<select id="cargoType" onchange="cargoOptions()">
+<option value="">Выберите</option>
+
+<option value="container">Контейнер</option>
+<option value="tank">Цистерна</option>
+<option value="tankadr">Цистерна ADR</option>
+<option value="adr">ADR</option>
+<option value="bulk">Сыпучие грузы</option>
+<option value="pallet">Палеты / Коробки</option>
+
+</select>
+</div>
+
+<div id="containerBlock" style="display:none;">
+
+<div class="form-group">
+<label>Размер контейнера</label>
+
+<select>
+<option>20DC</option>
+<option>40DC</option>
+<option>40HC</option>
+<option>45HC</option>
+</select>
+
+</div>
+
+</div>
+
+<div id="palletBlock" style="display:none;">
+
+<div class="form-group">
+<label>Размер палеты</label>
+
+<select>
+<option>EUR1 (1200×800)</option>
+<option>EUR2 (1200×1000)</option>
+<option>EUR3 (1000×1200)</option>
+<option>EUR6 (800×600)</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Количество палет</label>
+<input type="number" value="1" min="1">
+</div>
+
+</div>
+
+<div id="adrBlock" style="display:none;">
+
+<div class="form-group">
+
+<label>Класс ADR</label>
+
+<select>
+<option>Класс 1</option>
+<option>Класс 2</option>
+<option>Класс 3</option>
+<option>Класс 4</option>
+<option>Класс 5</option>
+<option>Класс 6</option>
+<option>Класс 7</option>
+<option>Класс 8</option>
+<option>Класс 9</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="form-group">
+<label>Вес груза (кг)</label>
+<input type="number" placeholder="22000">
+</div>
+
+<div class="form-group">
+<label>Объём (м³)</label>
+<input type="number" placeholder="67">
+</div>
+
+<div class="form-group">
+
+<label>Тип автомобиля</label>
+
+<select>
+<option>Тент</option>
+<option>Рефрижератор</option>
+<option>Изотерм</option>
+<option>Контейнеровоз</option>
+<option>Цистерна</option>
+<option>Самосвал</option>
+<option>Малотоннажный фургон</option>
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Срочная доставка</label>
+
+<select>
+<option>Нет</option>
+<option>Да</option>
+</select>
+
+</div>
+
+<button>
+РАССЧИТАТЬ
+</button>
+
+<div class="result">
+
+<h3>Результат</h3>
+
+<p><strong>Расстояние:</strong> 0 км</p>
+<p><strong>Стоимость за км:</strong> 0 €/км</p>
+<p><strong>Стоимость перевозки:</strong> 0 €</p>
+<p><strong>Время в пути:</strong> 0 ч</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contacts">
+
+<div class="container">
+
+<h2>Контакты</h2>
+
+<div class="card">
+
+<p>Email: info@logistics.com</p>
+<p>Телефон: +421 XXX XXX XXX</p>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Logistics Platform
+
+</footer>
+
+<script>
+
+const countries = {
+
+"Австрия":["Вена","Грац","Линц","Зальцбург","Инсбрук","Клагенфурт"],
+
+"Бельгия":["Брюссель","Антверпен","Гент","Льеж","Намюр"],
+
+"Германия":[
+"Берлин",
+"Гамбург",
+"Мюнхен",
+"Кёльн",
+"Франкфурт-на-Майне",
+"Штутгарт",
+"Дрезден",
+"Ганновер",
+"Бремен",
+"Дюссельдорф"
+],
+
+"Франция":[
+"Париж",
+"Марсель",
+"Лион",
+"Тулуза",
+"Бордо",
+"Нант",
+"Лилль",
+"Страсбург"
+],
+
+"Италия":[
+"Рим",
+"Милан",
+"Турин",
+"Неаполь",
+"Болонья",
+"Генуя",
+"Венеция",
+"Флоренция"
+],
+
+"Испания":[
+"Мадрид",
+"Барселона",
+"Валенсия",
+"Севилья",
+"Сарагоса",
+"Бильбао"
+],
+
+"Нидерланды":[
+"Амстердам",
+"Роттердам",
+"Гаага",
+"Утрехт",
+"Эйндховен"
+],
+
+"Словакия":[
+"Братислава",
+"Кошице",
+"Прешов",
+"Нитра",
+"Жилина",
+"Трнава",
+"Тренчин",
+"Банска-Бистрица"
+],
+
+"Португалия":[
+"Лиссабон",
+"Порту",
+"Брага",
+"Коимбра"
+],
+
+"Финляндия":[
+"Хельсинки",
+"Тампере",
+"Турку",
+"Оулу"
+],
+
+"Греция":[
+"Афины",
+"Салоники",
+"Патры",
+"Лариса"
+],
+
+"Литва":[
+"Вильнюс",
+"Каунас",
+"Клайпеда"
+],
+
+"Латвия":[
+"Рига",
+"Даугавпилс",
+"Лиепая"
+],
+
+"Эстония":[
+"Таллин",
+"Тарту",
+"Нарва"
+],
+
+"Словения":[
+"Любляна",
+"Марибор",
+"Копер"
+],
+
+"Хорватия":[
+"Загреб",
+"Сплит",
+"Риека",
+"Осиек"
+],
+
+"Люксембург":["Люксембург"],
+
+"Ирландия":[
+"Дублин",
+"Корк",
+"Голуэй",
+"Лимерик"
+],
+
+"Кипр":[
+"Никосия",
+"Лимасол"
+],
+
+"Мальта":[
+"Валлетта"
+]
+
+};
+
+function loadCountries(){
+
+const fromCountry=document.getElementById("fromCountry");
+const toCountry=document.getElementById("toCountry");
+
+for(let country in countries){
+
+fromCountry.innerHTML+=
+`<option value="${country}">${country}</option>`;
+
+toCountry.innerHTML+=
+`<option value="${country}">${country}</option>`;
+}
+
+updateCities("from");
+updateCities("to");
+
+}
+
+function updateCities(type){
+
+const country=
+document.getElementById(type+"Country").value;
+
+const citySelect=
+document.getElementById(type+"City");
+
+citySelect.innerHTML="";
+
+countries[country].forEach(city=>{
+
+citySelect.innerHTML+=
+`<option>${city}</option>`;
+
+});
+
+}
+
+function cargoOptions(){
+
+let cargo =
+document.getElementById("cargoType").value;
+
+document.getElementById("containerBlock").style.display="none";
+document.getElementById("palletBlock").style.display="none";
+document.getElementById("adrBlock").style.display="none";
+
+if(cargo==="container"){
+document.getElementById("containerBlock").style.display="block";
+}
+
+if(cargo==="pallet"){
+document.getElementById("palletBlock").style.display="block";
+}
+
+if(cargo==="adr" || cargo==="tankadr"){
+document.getElementById("adrBlock").style.display="block";
+}
+
+}
+
+window.onload=loadCountries;
+
+</script>
+
+</body>
+</html>
