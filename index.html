@@ -871,24 +871,7 @@ function calculatePrice() {
         Number(document.getElementById("weight").value) || 0;
 
     let volume =
-        Number(document.getElementById("volume").value) || 0;
-
-    let volumeCoef = 1;
-
-    if(selectedCargo === "Sypký náklad"){
-
-        if(volume > 10)
-            volumeCoef = 1.05;
-
-        if(volume > 30)
-            volumeCoef = 1.15;
-
-        if(volume > 60)
-            volumeCoef = 1.30;
-
-        if(volume > 80)
-            volumeCoef = 1.50;
-    }
+        Number(document.getElementById("volume")?.value) || 0;
 
     let urgent =
         document.getElementById("urgent").value;
@@ -908,6 +891,23 @@ function calculatePrice() {
 
     if(weight > 10000)
         weightCoef = 1.30;
+
+    let volumeCoef = 1;
+
+    if(selectedCargo === "Sypký náklad"){
+
+        if(volume > 10)
+            volumeCoef = 1.05;
+
+        if(volume > 30)
+            volumeCoef = 1.15;
+
+        if(volume > 60)
+            volumeCoef = 1.30;
+
+        if(volume > 80)
+            volumeCoef = 1.50;
+    }
 
     let urgentCoef =
         urgent === "Áno" ? 1.25 : 1;
@@ -930,7 +930,7 @@ function calculatePrice() {
         weightCoef *
         volumeCoef *
         urgentCoef *
-        vehicleCoef[vehicle];
+        (vehicleCoef[vehicle] || 1);
 
     document.getElementById("resultDistance").innerHTML =
         distance + " km";
@@ -944,7 +944,6 @@ function calculatePrice() {
     document.getElementById("resultTime").innerHTML =
         Math.round(distance / 75) + " h";
 }
-
 function initMap(){
 
 
