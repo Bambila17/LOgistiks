@@ -879,7 +879,7 @@ function calculatePrice() {
     let vehicle =
         document.getElementById("vehicle").value;
 
-    let distance = 500;
+    let distance = showRoute();
 
     let rate =
         rates[selectedCargo] || 1.45;
@@ -933,7 +933,7 @@ function calculatePrice() {
         (vehicleCoef[vehicle] || 1);
 
     document.getElementById("resultDistance").innerHTML =
-        distance + " km";
+        distance.toFixed(0) + " km"
 
     document.getElementById("resultRate").innerHTML =
         rate.toFixed(2) + " €/km";
@@ -1072,7 +1072,7 @@ routeDistance =
     map.fitBounds(routeLine.getBounds(),{
         padding:[50,50]
     });
-
+return routeDistance;
 }
 window.onload = function(){
 
