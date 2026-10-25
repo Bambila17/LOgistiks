@@ -183,9 +183,9 @@ footer{
 
 <nav>
 <ul>
-<li>#exchangeБиржа</a></li>
-<li>#calculatorКалькулятор</a></li>
-<li>#contactsКонтакты</a></li>
+<li><a href="#exchange">Burza</a></li>
+<li><a href="#calculator">Kalkulačka</a></li>
+<li><a href="#contacts">Kontakty</a></li>
 </ul>
 </nav>
 
@@ -193,10 +193,10 @@ footer{
 
 <section class="hero">
 
-<h1>Логистическая платформа</h1>
+<h1>Logistická platforma</h1>
 
 <p>
-Поиск грузов, расчёт перевозок и управление логистикой
+Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 </p>
 
 </section>
@@ -223,42 +223,42 @@ footer{
 
 <div class="container">
 
-<h2>Калькулятор стоимости перевозки</h2>
+<h2>Kalkulačka prepravných nákladov</h2>
 
 <div class="card">
 
 <div class="form-group">
-<label>Страна отправления</label>
+<label>Krajina odoslania</label>
 <select id="fromCountry" onchange="updateCities('from')"></select>
 </div>
 
 <div class="form-group">
-<label>Город отправления</label>
+<label>Mesto odoslania</label>
 <select id="fromCity"></select>
 </div>
 
 <div class="form-group">
-<label>Страна назначения</label>
+<label>Krajina doručenia</label>
 <select id="toCountry" onchange="updateCities('to')"></select>
 </div>
 
 <div class="form-group">
-<label>Город назначения</label>
+<label>Mesto doručenia</label>
 <select id="toCity"></select>
 </div>
 
 <div class="form-group">
-<label>Тип груза</label>
+<label>Typ nákladu</label>
 
 <select id="cargoType" onchange="cargoOptions()">
-<option value="">Выберите</option>
+<option value="">Vyberte</option>
 
-<option value="container">Контейнер</option>
-<option value="tank">Цистерна</option>
-<option value="tankadr">Цистерна ADR</option>
-<option value="adr">ADR</option>
-<option value="bulk">Сыпучие грузы</option>
-<option value="pallet">Палеты / Коробки</option>
+<option value="container">Kontajner</option>
+<option value="tank">Cisterna</option>
+<option value="tankadr">ADR cisterna</option>
+<option value="adr">ADR náklad</option>
+<option value="bulk">Sypký náklad</option>
+<option value="pallet">Palety / Krabice</option>
 
 </select>
 </div>
@@ -266,7 +266,7 @@ footer{
 <div id="containerBlock" style="display:none;">
 
 <div class="form-group">
-<label>Размер контейнера</label>
+<label>Veľkosť kontajnera</label>
 
 <select>
 <option>20DC</option>
@@ -282,7 +282,7 @@ footer{
 <div id="palletBlock" style="display:none;">
 
 <div class="form-group">
-<label>Размер палеты</label>
+<label>Veľkosť palety</label>
 
 <select>
 <option>EUR1 (1200×800)</option>
@@ -294,7 +294,7 @@ footer{
 </div>
 
 <div class="form-group">
-<label>Количество палет</label>
+<label>Počet paliet</label>
 <input type="number" value="1" min="1">
 </div>
 
@@ -304,18 +304,18 @@ footer{
 
 <div class="form-group">
 
-<label>Класс ADR</label>
+<label>Trieda ADR</label>
 
 <select>
-<option>Класс 1</option>
-<option>Класс 2</option>
-<option>Класс 3</option>
-<option>Класс 4</option>
-<option>Класс 5</option>
-<option>Класс 6</option>
-<option>Класс 7</option>
-<option>Класс 8</option>
-<option>Класс 9</option>
+<option>Trieda 1</option>
+<option>Trieda 2</option>
+<option>Trieda 3</option>
+<option>Trieda 4</option>
+<option>Trieda 5</option>
+<option>Trieda 6</option>
+<option>Trieda 7</option>
+<option>Trieda 8</option>
+<option>Trieda 9</option>
 </select>
 
 </div>
@@ -323,54 +323,54 @@ footer{
 </div>
 
 <div class="form-group">
-<label>Вес груза (кг)</label>
+<label>Hmotnosť nákladu (kg)</label>
 <input type="number" placeholder="22000">
 </div>
 
 <div class="form-group">
-<label>Объём (м³)</label>
+<label>Objem (m³)</label>
 <input type="number" placeholder="67">
 </div>
 
 <div class="form-group">
 
-<label>Тип автомобиля</label>
+<label>Typ vozidla</label>
 
 <select>
-<option>Тент</option>
-<option>Рефрижератор</option>
-<option>Изотерм</option>
-<option>Контейнеровоз</option>
-<option>Цистерна</option>
-<option>Самосвал</option>
-<option>Малотоннажный фургон</option>
+<option>Plachtové vozidlo</option>
+<option>Chladiarenské vozidlo</option>
+<option>Izotermické vozidlo</option>
+<option>Kontajnerový nosič</option>
+<option>Cisterna</option>
+<option>Sklápač</option>
+<option>Dodávka</option>
 </select>
 
 </div>
 
 <div class="form-group">
 
-<label>Срочная доставка</label>
+<label>Expresné doručenie</label>
 
 <select>
-<option>Нет</option>
-<option>Да</option>
+<option>Nie</option>
+<option>Ano</option>
 </select>
 
 </div>
 
 <button>
-РАССЧИТАТЬ
+VYPOČÍTAŤ
 </button>
 
 <div class="result">
 
-<h3>Результат</h3>
+<h3>Výsledok</h3>
 
-<p><strong>Расстояние:</strong> 0 км</p>
-<p><strong>Стоимость за км:</strong> 0 €/км</p>
-<p><strong>Стоимость перевозки:</strong> 0 €</p>
-<p><strong>Время в пути:</strong> 0 ч</p>
+<p><strong>Vzdialenosť:</strong> 0 km</p>
+<p><strong>Cena za km:</strong> 0 €/km</p>
+<p><strong>Cena prepravy:</strong> 0 €</p>
+<p><strong>Čas prepravy:</strong> 0 h</p>
 
 </div>
 
@@ -384,12 +384,12 @@ footer{
 
 <div class="container">
 
-<h2>Контакты</h2>
+<h2>Kontakty</h2>
 
 <div class="card">
 
 <p>Email: info@logistics.com</p>
-<p>Телефон: +421 XXX XXX XXX</p>
+<p>Tel. čislo: +421 XXX XXX XXX</p>
 
 </div>
 
@@ -407,141 +407,143 @@ footer{
 
 const countries = {
 
-"Австрия":["Вена","Грац","Линц","Зальцбург","Инсбрук","Клагенфурт"],
+"Rakúsko":["Viedeň","Graz","Linz","Salzburg","Innsbruck","Klagenfurt"],
 
-"Бельгия":["Брюссель","Антверпен","Гент","Льеж","Намюр"],
+"Belgicko":["Brusel","Antverpy","Gent","Liège","Namur"],
 
-"Германия":[
-"Берлин",
-"Гамбург",
-"Мюнхен",
-"Кёльн",
-"Франкфурт-на-Майне",
-"Штутгарт",
-"Дрезден",
-"Ганновер",
-"Бремен",
-"Дюссельдорф"
+"Nemecko":[
+"Berlín",
+"Hamburg",
+"Mníchov",
+"Kolín nad Rýnom",
+"Frankfurt nad Mohanom",
+"Stuttgart",
+"Drážďany",
+"Hannover",
+"Brémy",
+"Düsseldorf"
 ],
 
-"Франция":[
-"Париж",
-"Марсель",
-"Лион",
-"Тулуза",
-"Бордо",
-"Нант",
-"Лилль",
-"Страсбург"
+"Francúzsko":[
+"Paríž",
+"Marseille",
+"Lyon",
+"Toulouse",
+"Bordeaux",
+"Nantes",
+"Lille",
+"Štrasburg"
 ],
 
-"Италия":[
-"Рим",
-"Милан",
-"Турин",
-"Неаполь",
-"Болонья",
-"Генуя",
-"Венеция",
-"Флоренция"
+"Taliansko":[
+"Rím",
+"Miláno",
+"Turín",
+"Neapol",
+"Bologna",
+"Janov",
+"Benátky",
+"Florencia"
 ],
 
-"Испания":[
-"Мадрид",
-"Барселона",
-"Валенсия",
-"Севилья",
-"Сарагоса",
-"Бильбао"
+"Španielsko":[
+"Madrid",
+"Barcelona",
+"Valencia",
+"Sevilla",
+"Zaragoza",
+"Bilbao"
 ],
 
-"Нидерланды":[
-"Амстердам",
-"Роттердам",
-"Гаага",
-"Утрехт",
-"Эйндховен"
+"Holandsko":[
+"Amsterdam",
+"Rotterdam",
+"Haag",
+"Utrecht",
+"Eindhoven"
 ],
 
-"Словакия":[
-"Братислава",
-"Кошице",
-"Прешов",
-"Нитра",
-"Жилина",
-"Трнава",
-"Тренчин",
-"Банска-Бистрица"
+"Slovensko":[
+"Bratislava",
+"Košice",
+"Prešov",
+"Nitra",
+"Žilina",
+"Trnava",
+"Trenčín",
+"Banská Bystrica"
 ],
 
-"Португалия":[
-"Лиссабон",
-"Порту",
-"Брага",
-"Коимбра"
+"Portugalsko":[
+"Lisabon",
+"Porto",
+"Braga",
+"Coimbra"
 ],
 
-"Финляндия":[
-"Хельсинки",
-"Тампере",
-"Турку",
-"Оулу"
+"Fínsko":[
+"Helsinki",
+"Tampere",
+"Turku",
+"Oulu"
 ],
 
-"Греция":[
-"Афины",
-"Салоники",
-"Патры",
-"Лариса"
+"Grécko":[
+"Atény",
+"Solún",
+"Patras",
+"Larisa"
 ],
 
-"Литва":[
-"Вильнюс",
-"Каунас",
-"Клайпеда"
+"Litva":[
+"Vilnius",
+"Kaunas",
+"Klaipėda"
 ],
 
-"Латвия":[
-"Рига",
-"Даугавпилс",
-"Лиепая"
+"Lotyšsko":[
+"Riga",
+"Daugavpils",
+"Liepāja"
 ],
 
-"Эстония":[
-"Таллин",
-"Тарту",
-"Нарва"
+"Estónsko":[
+"Tallinn",
+"Tartu",
+"Narva"
 ],
 
-"Словения":[
-"Любляна",
-"Марибор",
-"Копер"
+"Slovinsko":[
+"Ľubľana",
+"Maribor",
+"Koper"
 ],
 
-"Хорватия":[
-"Загреб",
-"Сплит",
-"Риека",
-"Осиек"
+"Chorvátsko":[
+"Záhreb",
+"Split",
+"Rijeka",
+"Osijek"
 ],
 
-"Люксембург":["Люксембург"],
-
-"Ирландия":[
-"Дублин",
-"Корк",
-"Голуэй",
-"Лимерик"
+"Luxembursko":[
+"Luxemburg"
 ],
 
-"Кипр":[
-"Никосия",
-"Лимасол"
+"Írsko":[
+"Dublin",
+"Cork",
+"Galway",
+"Limerick"
 ],
 
-"Мальта":[
-"Валлетта"
+"Cyprus":[
+"Nikózia",
+"Limassol"
+],
+
+"Malta":[
+"Valletta"
 ]
 
 };
