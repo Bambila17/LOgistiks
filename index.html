@@ -214,13 +214,55 @@ Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 
 <div class="container">
 
-<h2>Биржа</h2>
+<h2>Burza</h2>
 
 <div class="card">
 
-<p>
-Раздел находится в разработке.
-</p>
+<h3>Pridať zákazku</h3>
+
+<div class="form-group">
+    <label>Mesto odoslania</label>
+    <input id="loadFrom">
+</div>
+
+<div class="form-group">
+    <label>Mesto doručenia</label>
+    <input id="loadTo">
+</div>
+
+<div class="form-group">
+    <label>Typ nákladu</label>
+    <input id="loadCargo">
+</div>
+
+<div class="form-group">
+    <label>Hmotnosť (kg)</label>
+    <input id="loadWeight">
+</div>
+
+<div class="form-group">
+    <label>Cena (€)</label>
+    <input id="loadPrice">
+</div>
+
+<div class="form-group">
+    <label>Kontaktná osoba</label>
+    <input id="loadContact">
+</div>
+
+<div class="form-group">
+    <label>Telefón</label>
+    <input id="loadPhone">
+</div>
+
+<button onclick="addLoad()">
+    Pridať zákazku
+</button>
+
+</div>
+
+<div id="loadsContainer"></div>
+
 
 </div>
 
@@ -1072,6 +1114,68 @@ routeDistance =
     });
 return routeDistance;
 }
+
+function addLoad(){
+
+    let from =
+        document.getElementById("loadFrom").value;
+
+    let to =
+        document.getElementById("loadTo").value;
+
+    let cargo =
+        document.getElementById("loadCargo").value;
+
+    let weight =
+        document.getElementById("loadWeight").value;
+
+    let price =
+        document.getElementById("loadPrice").value;
+
+    let contact =
+        document.getElementById("loadContact").value;
+
+    let phone =
+        document.getElementById("loadPhone").value;
+
+    if(
+        !from ||
+        !to ||
+        !cargo ||
+        !weight ||
+        !price
+    ){
+        alert("Vyplňte všetky povinné polia");
+        return;
+    }
+
+    let card =
+        document.createElement("div");
+
+    card.className = "card";
+
+    card.innerHTML = `
+
+        <h3>🚚 ${from} → ${to}</h3>
+
+        <p><strong>Typ nákladu:</strong> ${cargo}</p>
+
+        <p><strong>Hmotnosť:</strong> ${weight} kg</p>
+
+        <p><strong>Cena:</strong> ${price} €</p>
+
+        <p><strong>Kontakt:</strong> ${contact}</p>
+
+        <p><strong>Telefón:</strong> ${phone}</p>
+
+    `;
+
+    document
+        .getElementById("loadsContainer")
+        .prepend(card);
+
+}
+    
 window.onload = function(){
 
     loadCountries();
