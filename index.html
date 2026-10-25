@@ -358,14 +358,37 @@ style="display:none;">
 <label>Typ vozidla</label>
 
 <select id="vehicle" disabled>
+
 <option value="">Automatický výber</option>
-<option>Plachtové vozidlo</option>
-<option>Chladiarenské vozidlo</option>
-<option>Izotermické vozidlo</option>
-<option>Kontajnerový nosič</option>
-<option>Cisterna</option>
-<option>Sklápač</option>
-<option>Dodávka</option>
+
+<option value="Plachtové vozidlo">
+    Plachtové vozidlo
+</option>
+
+<option value="Chladiarenské vozidlo">
+    Chladiarenské vozidlo
+</option>
+
+<option value="Izotermické vozidlo">
+    Izotermické vozidlo
+</option>
+
+<option value="Kontajnerový nosič">
+    Kontajnerový nosič
+</option>
+
+<option value="Cisterna">
+    Cisterna
+</option>
+
+<option value="Sklápač">
+    Sklápač
+</option>
+
+<option value="Dodávka">
+    Dodávka
+</option>
+
 </select>
 
 </div>
@@ -836,35 +859,36 @@ const rates = {
 
 function calculatePrice() {
 
-    
-showRoute();
-    let cargoType = document.getElementById("cargoType");
+    showRoute();
+
+    let cargoType =
+        document.getElementById("cargoType");
 
     let selectedCargo =
         cargoType.options[cargoType.selectedIndex].text;
 
-   let weight =
-    Number(document.getElementById("weight").value) || 0;
+    let weight =
+        Number(document.getElementById("weight").value) || 0;
 
-let volume =
-    Number(document.getElementById("volume").value) || 0;
+    let volume =
+        Number(document.getElementById("volume").value) || 0;
 
-let volumeCoef = 1;
+    let volumeCoef = 1;
 
-if(selectedCargo === "Sypký náklad"){
+    if(selectedCargo === "Sypký náklad"){
 
-    if(volume > 10)
-        volumeCoef = 1.05;
+        if(volume > 10)
+            volumeCoef = 1.05;
 
-    if(volume > 30)
-        volumeCoef = 1.15;
+        if(volume > 30)
+            volumeCoef = 1.15;
 
-    if(volume > 60)
-        volumeCoef = 1.30;
+        if(volume > 60)
+            volumeCoef = 1.30;
 
-    if(volume > 80)
-        volumeCoef = 1.50;
-}
+        if(volume > 80)
+            volumeCoef = 1.50;
+    }
 
     let urgent =
         document.getElementById("urgent").value;
@@ -874,7 +898,8 @@ if(selectedCargo === "Sypký náklad"){
 
     let distance = 500;
 
-    let rate = rates[selectedCargo] || 1.45;
+    let rate =
+        rates[selectedCargo] || 1.45;
 
     let weightCoef = 1;
 
@@ -889,40 +914,36 @@ if(selectedCargo === "Sypký náklad"){
 
     let vehicleCoef = {
 
-    "Dodávka":1.00,
-    "Plachtové vozidlo":1.10,
-    "Izotermické vozidlo":1.20,
-    "Chladiarenské vozidlo":1.35,
-    "Kontajnerový nosič":1.15,
-    "Cisterna":1.40,
-    "Sklápač":1.30
+        "Dodávka":1.00,
+        "Plachtové vozidlo":1.10,
+        "Izotermické vozidlo":1.20,
+        "Chladiarenské vozidlo":1.35,
+        "Kontajnerový nosič":1.15,
+        "Cisterna":1.40,
+        "Sklápač":1.30
 
-};
+    };
 
-let finalPrice =
-    distance *
-    rate *
-    weightCoef *
-    volumeCoef *
-    urgentCoef *
-    vehicleCoef[vehicle];
+    let finalPrice =
+        distance *
+        rate *
+        weightCoef *
+        volumeCoef *
+        urgentCoef *
+        vehicleCoef[vehicle];
 
-document.getElementById("resultDistance").innerHTML =
-    distance + " km";
+    document.getElementById("resultDistance").innerHTML =
+        distance + " km";
 
-document.getElementById("resultRate").innerHTML =
-    rate.toFixed(2) + " €/km";
+    document.getElementById("resultRate").innerHTML =
+        rate.toFixed(2) + " €/km";
 
-document.getElementById("resultPrice").innerHTML =
-    finalPrice.toFixed(0) + " €";
+    document.getElementById("resultPrice").innerHTML =
+        finalPrice.toFixed(0) + " €";
 
-document.getElementById("resultTime").innerHTML =
-    Math.round(distance / 75) + " h";
+    document.getElementById("resultTime").innerHTML =
+        Math.round(distance / 75) + " h";
 }
-let map;
-let routeLine;
-let startMarker;
-let endMarker;
 
 function initMap(){
 
