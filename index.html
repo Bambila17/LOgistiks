@@ -324,7 +324,10 @@ Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 
 <div class="form-group">
 <label>Hmotnosť nákladu (kg)</label>
-<input type="number" placeholder="22000">
+<input
+type="number"
+id="weight"
+placeholder="22000">
 </div>
 
 <div class="form-group">
@@ -336,7 +339,7 @@ Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 
 <label>Typ vozidla</label>
 
-<select>
+<select id="vehicle">
 <option>Plachtové vozidlo</option>
 <option>Chladiarenské vozidlo</option>
 <option>Izotermické vozidlo</option>
@@ -352,14 +355,14 @@ Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 
 <label>Expresné doručenie</label>
 
-<select>
+<select id="urgent">
 <option>Nie</option>
 <option>Ano</option>
 </select>
 
 </div>
 
-<button>
+<button onclick="calculatePrice()">
 VYPOČÍTAŤ
 </button>
 
@@ -367,10 +370,25 @@ VYPOČÍTAŤ
 
 <h3>Výsledok</h3>
 
-<p><strong>Vzdialenosť:</strong> 0 km</p>
-<p><strong>Cena za km:</strong> 0 €/km</p>
-<p><strong>Cena prepravy:</strong> 0 €</p>
-<p><strong>Čas prepravy:</strong> 0 h</p>
+<p>
+<strong>Vzdialenosť:</strong>
+<span id="resultDistance">0 km</span>
+</p>
+
+<p>
+<strong>Cena za km:</strong>
+<span id="resultRate">0 €/km</span>
+</p>
+
+<p>
+<strong>Cena prepravy:</strong>
+<span id="resultPrice">0 €</span>
+</p>
+
+<p>
+<strong>Čas prepravy:</strong>
+<span id="resultTime">0 h</span>
+</p>
 
 </div>
 
@@ -607,6 +625,77 @@ if(cargo==="adr" || cargo==="tankadr"){
 document.getElementById("adrBlock").style.display="block";
 }
 
+}
+const rates = {
+    "Kontajner": 1.55,
+    "Cisterna": 1.75,
+    "ADR cisterna": 2.45,
+    "ADR náklad": 2.10,
+    "Sypký náklad": 1.60,
+    "Palety / Krabice": 1.45
+};
+
+function calculatePrice() {
+
+    let cargoType = document.getElementById("cargoType");
+
+    let selectedCargo =
+        cargoType.options[cargoType.selectedIndex].text;
+
+    let weight =
+        Number(document.getElementById("weight").value) || 0;
+
+    let urgent =
+        document.getElementById("urgent").value;
+
+    let vehicle =
+        document.getElementById("vehicle").value;
+
+    let distance = 500;
+
+    let rate = rates[selectedCargo] || 1.45;
+
+    let weightCoef = 1;
+
+    if(weight > 3000)
+        weightCoef = 1.15;
+
+    if(weight > 10000)
+        weightCoef = 1.30;
+
+    let urgentCoef =
+        urgent === "Áno" ? 1.25 : 1;
+
+    let vehicleCoef = {
+
+        "Dodávka":1.00,
+        "Plachtové vozidlo":1.10,
+        "Izotermické vozidlo":1.20,
+        "Chladiarenské vozidlo":1.35,
+        "Kontajnerový nosič":1.15,
+        "Cisterna":1.40,
+        "Sklápač":1.30
+
+    };
+
+    let finalPrice =
+        distance *
+        rate *
+        weightCoef *
+        urgentCoef *
+        vehicleCoef[vehicle];
+
+    document.getElementById("resultDistance").innerHTML =
+        distance + " km";
+
+    document.getElementById("resultRate").innerHTML =
+        rate.toFixed(2) + " €/km";
+
+    document.getElementById("resultPrice").innerHTML =
+        finalPrice.toFixed(0) + " €";
+
+    document.getElementById("resultTime").innerHTML =
+        Math.round(distance / 75) + " h";
 }
 
 window.onload=loadCountries;
