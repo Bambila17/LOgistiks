@@ -857,6 +857,8 @@ showRoute();
 }
 let map;
 let routeLine;
+let startMarker;
+let endMarker;
 
 function initMap(){
 
@@ -873,6 +875,8 @@ function initMap(){
 
 function showRoute(){
 
+    function showRoute(){
+
     let fromCity =
         document.getElementById("fromCity").value;
 
@@ -886,22 +890,64 @@ function showRoute(){
         return;
     }
 
+    let start =
+        cityCoordinates[fromCity];
+
+    let end =
+        cityCoordinates[toCity];
+        let routeDistance =
+    calculateDistance(
+        start[0],
+        start[1],
+        end[0],
+        end[1]
+    );
+
+routeDistance =
+    routeDistance * 1.20;
+
     if(routeLine){
         map.removeLayer(routeLine);
     }
 
-    let start = cityCoordinates[fromCity];
-    let end = cityCoordinates[toCity];
+    if(startMarker){
+        map.removeLayer(startMarker);
+    }
 
-    routeLine = L.polyline(
-        [start,end],
-        {
-            color:'blue',
-            weight:4
-        }
-    ).addTo(map);
+    if(endMarker){
+        map.removeLayer(endMarker);
+    }
 
-    map.fitBounds(routeLine.getBounds());
+    startMarker =
+        L.marker(start)
+        .addTo(map)
+        .bindPopup(
+    "<b>Odoslanie</b><br>" +
+    fromCity
+);
+
+    endMarker =
+        L.marker(end)
+        .addTo(map)
+        .bindPopup(
+    "<b>Doručenie</b><br>" +
+    toCity
+);
+
+    routeLine =
+        L.polyline(
+            [start,end],
+            {
+                color:"#2563eb",
+                weight:5
+            }
+        ).addTo(map);
+
+    map.fitBounds(routeLine.getBounds(),{
+        padding:[50,50]
+    });
+
+}
 }
 window.onload = function(){
 
