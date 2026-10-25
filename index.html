@@ -889,15 +889,17 @@ if(selectedCargo === "Sypký náklad"){
 
     let vehicleCoef = {
 
-        "Dodávka":1.00,
-        "Plachtové vozidlo":1.10,
-        "Izotermické vozidlo":1.20,
-        "Chladiarenské vozidlo":1.35,
-        "Kontajnerový nosič":1.15,
-        "Cisterna":1.40,
-        "Sklápač":1.30
-        
-        let finalPrice =
+    "Dodávka":1.00,
+    "Plachtové vozidlo":1.10,
+    "Izotermické vozidlo":1.20,
+    "Chladiarenské vozidlo":1.35,
+    "Kontajnerový nosič":1.15,
+    "Cisterna":1.40,
+    "Sklápač":1.30
+
+};
+
+let finalPrice =
     distance *
     rate *
     weightCoef *
@@ -905,26 +907,17 @@ if(selectedCargo === "Sypký náklad"){
     urgentCoef *
     vehicleCoef[vehicle];
 
+document.getElementById("resultDistance").innerHTML =
+    distance + " km";
 
-    };
+document.getElementById("resultRate").innerHTML =
+    rate.toFixed(2) + " €/km";
 
-    <input
-type="number"
-id="volume"
-placeholder="67"> 
+document.getElementById("resultPrice").innerHTML =
+    finalPrice.toFixed(0) + " €";
 
-
-    document.getElementById("resultDistance").innerHTML =
-        distance + " km";
-
-    document.getElementById("resultRate").innerHTML =
-        rate.toFixed(2) + " €/km";
-
-    document.getElementById("resultPrice").innerHTML =
-        <input type="number" placeholder="67">.toFixed(0) + " €";
-
-    document.getElementById("resultTime").innerHTML =
-        Math.round(distance / 75) + " h";
+document.getElementById("resultTime").innerHTML =
+    Math.round(distance / 75) + " h";
 }
 let map;
 let routeLine;
