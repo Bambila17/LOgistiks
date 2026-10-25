@@ -216,7 +216,14 @@ Vyhľadávanie nákladov, výpočet nákladov na prepravu a riadenie logistiky
 
 <h2>Burza</h2>
 
-<div class="card">
+<button onclick="toggleLoadForm()">
++ Pridať zákazku
+</button>
+
+<div
+id="loadForm"
+class="card"
+style="display:none;">
 
 <h3>Pridať zákazku</h3>
 
@@ -1115,6 +1122,23 @@ routeDistance =
 return routeDistance;
 }
 
+function toggleLoadForm(){
+
+    let form =
+        document.getElementById("loadForm");
+
+    if(form.style.display === "none"){
+
+        form.style.display = "block";
+
+    }else{
+
+        form.style.display = "none";
+
+    }
+
+}
+    
 function addLoad(){
 
     let from =
@@ -1173,6 +1197,10 @@ function addLoad(){
     document
         .getElementById("loadsContainer")
         .prepend(card);
+    
+    document
+    .getElementById("loadForm")
+    .style.display = "none";
 
 }
     
