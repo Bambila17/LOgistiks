@@ -836,13 +836,6 @@ const rates = {
 
 function calculatePrice() {
 
-let finalPrice =
-    distance *
-    rate *
-    weightCoef *
-    volumeCoef *
-    urgentCoef *
-    vehicleCoef[vehicle];
     
 showRoute();
     let cargoType = document.getElementById("cargoType");
@@ -903,6 +896,15 @@ if(selectedCargo === "Sypký náklad"){
         "Kontajnerový nosič":1.15,
         "Cisterna":1.40,
         "Sklápač":1.30
+        
+        let finalPrice =
+    distance *
+    rate *
+    weightCoef *
+    volumeCoef *
+    urgentCoef *
+    vehicleCoef[vehicle];
+
 
     };
 
